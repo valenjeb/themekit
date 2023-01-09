@@ -1,0 +1,51 @@
+{
+  "name": "devly/themekit",
+  "description": "",
+  "type": "wordpress-muplugin",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "valenjeb",
+      "homepage": "https://github.com/valenjeb"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Devly\\ThemeKit\\": "src"
+    },
+    "files": ["src/functions.php", "src/globals.php"]
+  },
+  "require": {
+    "php": "^7.4",
+    "devly/config-loader": "dev-master",
+    "devly/php-di": "dev-master",
+    "devly/utils": "dev-master",
+    "devly/wp-assets": "dev-master",
+    "devly/wp-cpt": "dev-master",
+    "devly/wp-models": "dev-master",
+    "devly/wp-query": "dev-master",
+    "devly/wp-routing": "dev-master",
+    "devly/wpdb": "dev-master",
+    "latte/latte": "^2.11",
+    "nette/component-model": "^3.0",
+    "tracy/tracy": "^2.9"
+  },
+  "require-dev": {
+    "cmb2/cmb2": "^2.10",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+    "devly/coding-standard": "^1.0",
+    "php-parallel-lint/php-parallel-lint": "^1.2.0",
+    "php-stubs/wordpress-stubs": "^6.1",
+    "phpstan/phpstan": "^1.9",
+    "szepeviktor/phpstan-wordpress": "^1.1",
+    "wp-cli/i18n-command": "^2.2.5",
+    "wptrt/wpthemereview": "^0.2.1"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
