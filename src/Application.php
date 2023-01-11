@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Devly\ThemeKit;
 
 use Devly\DI\Container;
+use Nette\Utils\FileSystem;
 
 use function in_array;
 use function ltrim;
@@ -14,9 +15,15 @@ class Application extends Container
 {
     protected string $env;
     protected bool $debug;
+    protected string $cachePath;
 
-    public function __construct(string $env = Environment::PRODUCTION, bool $debug = false, bool $autowire = true, bool $shared = true)
-    {
+    public function __construct(
+        string $env = Environment::PRODUCTION,
+        bool $debug = false,
+        bool $autowire = true,
+        bool $shared = true,
+        ?string $cachePath = null
+    ) {
         if (
             ! in_array(
                 $env,
@@ -29,6 +36,12 @@ class Application extends Container
         }
 
         $this->debug = $debug;
+
+        $this->cachePath = apply_filters(
+            'themekit/cache_directory_path',
+            $cachePath ?? WP_CONTENT_DIR . '/cache/themekit'
+        );
+        FileSystem::createDir($this->cachePath);
 
         parent::__construct([], $autowire, $shared);
     }
@@ -70,8 +83,6 @@ class Application extends Container
 
     public function getCacheDir(?string $path = null): string
     {
-        $dirPath = apply_filters('themekit/cache_directory_path', WP_CONTENT_DIR . '/cache/themekit');
-
-        return rtrim($dirPath, '/') . (! empty($path) ? '/' . ltrim($path, '/') : '');
+        return rtrim($this->cachePath, '/') . (! empty($path) ? '/' . ltrim($path, '/') : '');
     }
 }
