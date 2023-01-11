@@ -44,7 +44,7 @@ class UIMacros extends MacroSet
 
         $name = $writer->formatWord($words[0]);
         $method = ucfirst($words[1] ?? '');
-        $method = Str::match($method, '#^\w*$#D')
+        $method = Str::match('#^\w*$#D', $method)
             ? "render$method"
             : "{\"render$method\"}";
 
