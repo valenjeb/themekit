@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Latte;
 
+use Devly\Exceptions\FileNotFoundException;
 use Devly\ThemeKit\Application;
 use Exception;
 use Throwable;
@@ -57,7 +58,7 @@ final class UIRuntimeFunctions
             do_action('get_header', $name, $args);
 
             $this->renderTemplate($templates);
-        } catch (Throwable $e) {
+        } catch (FileNotFoundException $e) {
             get_header($name, $args);
         }
     }
@@ -110,15 +111,21 @@ final class UIRuntimeFunctions
      */
     public function renderTemplate($templates, $params = []): void
     {
-        $dir = $this->app->config('view.dirname');
         $templates = is_array($templates) ? $templates : [$templates];
-        $templates = array_map(static fn ($t) => trailingslashit($dir) . $t, $templates);
-        $located = locate_template($templates);
+        $located   = null;
+
+        foreach ($templates as $template) {
+            try {
+                $located = $this->engine->getFinder()->find($template);
+                break;
+            } catch (FileNotFoundException $e) {
+            }
+        }
 
         if (! $located) {
-            $message = sprintf('Templates could not be located: %s', implode(', ', $templates));
+            $message = sprintf('Templates could not be located: %s.', implode(', ', $templates));
 
-            throw new Exception($message);
+            throw new FileNotFoundException($message);
         }
 
         $this->engine->render($located, $params);
