@@ -17,13 +17,11 @@ use function Devly\ThemeKit\svg;
 final class UIRuntimeFunctions
 {
     private static UIRuntimeFunctions $instance;
-    protected Application $app;
     private LatteEngine $engine;
 
-    private function __construct(LatteEngine $engine, Application $app)
+    private function __construct(LatteEngine $engine)
     {
         $this->engine = $engine;
-        $this->app = $app;
 
         $engine->addFunction('get_header', [$this, 'getHeader']);
         $engine->addFunction('get_footer', [$this, 'getFooter']);
@@ -36,13 +34,13 @@ final class UIRuntimeFunctions
         $engine->addFunction('svg', [$this, 'renderSvg']);
     }
 
-    public static function install(LatteEngine $engine, Application $app): void
+    public static function install(LatteEngine $engine): void
     {
         if (isset(self::$instance)) {
             return;
         }
 
-        self::$instance = new self($engine, $app);
+        self::$instance = new self($engine);
     }
 
     /** @param array<string, mixed> $args */
