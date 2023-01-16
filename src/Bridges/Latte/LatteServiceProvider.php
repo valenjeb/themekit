@@ -18,6 +18,7 @@ use Devly\WP\Routing\Hooks;
 
 class LatteServiceProvider extends ServiceProvider implements IBootableServiceProvider, IConfigProvider
 {
+    /** @var array|string[] */
     protected array $providers = [
         LatteEngine::class,
         Finder::class,

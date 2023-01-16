@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Devly\ThemeKit\Bridges\Latte;
 
 use Devly\Exceptions\FileNotFoundException;
-use Devly\ThemeKit\Application;
 use Devly\WP\Assets\Asset;
 use Latte\Runtime\Html;
 use Throwable;
@@ -13,6 +12,9 @@ use WP_Post_Type;
 use WP_Term;
 
 use function Devly\ThemeKit\svg;
+use function implode;
+use function is_array;
+use function sprintf;
 
 final class UIRuntimeFunctions
 {
@@ -145,41 +147,40 @@ final class UIRuntimeFunctions
         }
 
         if ($obj instanceof WP_Term) {
+            // phpcs:ignore Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
             return get_term_meta($obj->term_id, '_archive_thumbnail_id') ?: 0;
         }
 
         return 0;
     }
 
-    /**
-     * @param string|string[] $attr
-     */
+    /** @param string|string[] $attr */
     public function getTheArchiveThumbnail(string $size = 'post-thumbnail', $attr = ''): string
     {
-        $attachment_id = $this->archiveThumbnailId();
+        $thumbnailId = $this->archiveThumbnailId();
 
         $html = '';
 
-        if ($attachment_id !== 0) {
-            $html = wp_get_attachment_image($attachment_id, $size, false, $attr);
+        if ($thumbnailId !== 0) {
+            $html = wp_get_attachment_image($thumbnailId, $size, false, $attr);
         }
 
         return $html;
     }
 
-    /**
-     * @param string|string[] $attr
-     */
+    /** @param string|string[] $attr */
     public function theArchiveThumbnail(string $size = 'post-thumbnail', $attr = ''): void
     {
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $this->getTheArchiveThumbnail($size, $attr);
     }
 
+    /** @return false|string */
     public function getTheArchiveThumbnailUrl(string $size = 'post-thumbnail')
     {
-        $attachment_id = $this->archiveThumbnailId();
+        $thumbnailId = $this->archiveThumbnailId();
 
-        if ($attachment_id === 0) {
+        if ($thumbnailId === 0) {
             return false;
         }
 

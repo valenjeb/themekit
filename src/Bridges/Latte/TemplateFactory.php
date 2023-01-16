@@ -6,6 +6,7 @@ namespace Devly\ThemeKit\Bridges\Latte;
 
 use Devly\Exceptions\ObjectNotFoundException;
 use Devly\ThemeKit\Application;
+use Devly\ThemeKit\Facades\Site;
 use Devly\ThemeKit\UI\Contracts\ITemplate;
 use Devly\ThemeKit\UI\Contracts\ITemplateFactory;
 use Devly\ThemeKit\UI\Control;
@@ -16,6 +17,7 @@ use Devly\WP\Models\Post;
 use Devly\WP\Models\Theme;
 use Devly\WP\Models\User;
 use Illuminate\Support\Collection;
+use WP_Post;
 
 use function array_key_exists;
 use function array_pop;
@@ -60,7 +62,7 @@ class TemplateFactory implements ITemplateFactory
 
         $template->control   = $control;
         $template->presenter = $presenter;
-        $template->site      = \Devly\ThemeKit\Facades\Site::getInstance();
+        $template->site      = Site::getInstance();
         $template->theme     = new Theme();
         $template->user      = new User(wp_get_current_user());
         $postTypes           = $this->app->config('app.posts', []);
@@ -88,9 +90,7 @@ class TemplateFactory implements ITemplateFactory
             $this->app->config('app.namespace', 'App') . '\\UI\\Templates'
         );
 
-        if (! $defaultTemplate = $this->app->config('view.template')) {
-            $defaultTemplate = $namespace . '\\DefaultTemplate';
-        }
+        $defaultTemplate = $this->app->config('view.template', $namespace . '\\DefaultTemplate');
 
         if ($control !== null) {
             $parts       = explode('\\', get_class($control));
@@ -101,7 +101,8 @@ class TemplateFactory implements ITemplateFactory
                 $templateNamespace = $controlName;
             }
 
-            if (class_exists($class = implode('\\', $parts) . '\\' . $templateNamespace . '\\Template')) {
+            $class = implode('\\', $parts) . '\\' . $templateNamespace . '\\Template';
+            if (class_exists($class)) {
                 return $class;
             }
         }
@@ -149,7 +150,7 @@ class TemplateFactory implements ITemplateFactory
     }
 
     /** @param array<string, string> $postTypes */
-    protected function ensureGlobalPost(\WP_Post $post, array $postTypes): ?Post
+    protected function ensureGlobalPost(WP_Post $post, array $postTypes): ?Post
     {
         if ($this->app->has('view.post')) {
             return $this->app->get('view.post');
