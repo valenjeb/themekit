@@ -14,7 +14,7 @@
     "psr-4": {
       "Devly\\ThemeKit\\": "src"
     },
-    "files": ["src/functions.php", "src/globals.php"]
+    "files": ["src/functions.php"]
   },
   "require": {
     "php": "^7.4",

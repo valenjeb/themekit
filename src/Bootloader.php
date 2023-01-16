@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Devly\ThemeKit;
 
 use Devly\ConfigLoader\Loader;
-use Devly\ThemeKit\Bridges\Tracy\TracyExtension;
 use Devly\ThemeKit\Facades\Facade;
-use Nette\Utils\FileSystem;
 use RuntimeException;
 use Throwable;
-use Tracy\Debugger;
 
 use function array_merge;
+use function dirname;
 use function func_get_args;
 use function is_array;
 use function sprintf;
@@ -21,10 +19,18 @@ class Bootloader
 {
     /** @var string[] */
     protected array $configPaths  = [];
-    protected string $environment = 'production';
+    protected string $environment = Environment::PRODUCTION;
     protected bool $debug         = false;
     protected ?string $logDir     = null;
-    protected array $providers    = [];
+    /** @var string[] */
+    protected array $providers = [];
+
+    public function loadGlobalFunctions(): self
+    {
+        require_once dirname(__FILE__) . '/globals.php';
+
+        return $this;
+    }
 
     public function addConfigPath(string $path): self
     {
@@ -54,9 +60,7 @@ class Bootloader
         return $this;
     }
 
-    /**
-     * @param string|string[] $service
-     */
+    /** @param string|string[] $service */
     public function addServiceProvider($service): self
     {
         $service = is_array($service) ? $service : func_get_args();
