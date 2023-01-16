@@ -34,7 +34,7 @@ class RoutingServiceProvider extends ServiceProvider implements IBootableService
         add_filter(Hooks::FILTER_CONTROLLER_SUFFIX, static fn () => 'Presenter');
         add_filter(Hooks::FILTER_DEFAULT_CONTROLLER, static fn () => DefaultPresenter::class);
         add_filter(Hooks::FILTER_NAMESPACE, static fn () => $di->config(
-            'view.namespace',
+            'view.namespace.presenter',
             $di->config('app.namespace', 'App\\') . 'UI\\Presenters'
         ));
 
