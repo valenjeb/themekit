@@ -6,11 +6,13 @@ namespace Devly\ThemeKit\Bridges\Latte;
 
 use Devly\Exceptions\FileNotFoundException;
 use Devly\ThemeKit\Application;
-use Exception;
+use Devly\WP\Assets\Asset;
+use Latte\Runtime\Html;
 use Throwable;
 use WP_Post_Type;
 use WP_Term;
 
+use function Devly\ThemeKit\svg;
 
 final class UIRuntimeFunctions
 {
@@ -31,6 +33,7 @@ final class UIRuntimeFunctions
         $engine->addFunction('archive_thumbnail_id', [$this, 'archiveThumbnailId']);
         $engine->addFunction('the_archive_thumbnail', [$this, 'theArchiveThumbnail']);
         $engine->addFunction('get_the_archive_thumbnail_url', [$this, 'getTheArchiveThumbnailUrl']);
+        $engine->addFunction('svg', [$this, 'renderSvg']);
     }
 
     public static function install(LatteEngine $engine, Application $app): void
@@ -183,5 +186,11 @@ final class UIRuntimeFunctions
         }
 
         return wp_get_attachment_image_url($this->archiveThumbnailId(), $size);
+    }
+
+    /** @param string|Asset $path */
+    public function renderSvg($path): Html
+    {
+        return new Html(svg($path));
     }
 }
