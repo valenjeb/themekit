@@ -13,7 +13,6 @@ use Devly\ThemeKit\UI\Presenter;
 use Devly\Utils\Arr;
 use Devly\WP\Models\Page;
 use Devly\WP\Models\Post;
-use Devly\WP\Models\Site;
 use Devly\WP\Models\Theme;
 use Devly\WP\Models\User;
 use Illuminate\Support\Collection;
@@ -54,6 +53,7 @@ class TemplateFactory implements ITemplateFactory
         }
 
         UIMacros::install($engine->getCompiler());
+        UIRuntimeFunctions::install($engine);
 
         $template = $this->app->makeWith($class, ['engine' => $engine]);
         Arr::invoke($this->onCreate, $template);
