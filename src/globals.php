@@ -67,3 +67,15 @@ if (! function_exists('view')) {
         \Devly\ThemeKit\view($template, $params);
     }
 }
+
+if (! function_exists('svg')) {
+    /**
+     * Renders SVG using provided path or Asset object
+     *
+     * @param string|Asset $path
+     */
+    function svg($path): string
+    {
+        return \Devly\ThemeKit\svg($path);
+    }
+}

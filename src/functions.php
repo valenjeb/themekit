@@ -14,6 +14,11 @@ use Devly\ThemeKit\UI\Contracts\ITemplate;
 use Devly\WP\Assets\Asset;
 use Devly\WP\Assets\Manager;
 
+use function assert;
+use function file_get_contents;
+use function is_file;
+use function is_string;
+
 /**
  * Retrieves an instance of current application object or a service from the application container.
  *
@@ -73,4 +78,24 @@ function view($template, $params = []): void
     }
 
     Engine::render($template, $params);
+}
+
+/**
+ * Renders SVG using provided path or Asset object
+ *
+ * @param string|Asset $path
+ */
+function svg($path): string
+{
+    if (is_string($path)) {
+        if (is_file($path)) {
+            return file_get_contents($path);
+        }
+
+        $path = asset($path);
+    }
+
+    assert($path instanceof Asset);
+
+    return file_get_contents($path->path());
 }
