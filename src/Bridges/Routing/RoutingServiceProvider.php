@@ -10,13 +10,22 @@ use Devly\ThemeKit\ServiceProvider;
 use Devly\ThemeKit\UI\DefaultPresenter;
 use Devly\WP\Routing\Hooks;
 use Devly\WP\Routing\Router;
+use Nette\Http\IRequest;
+use Nette\Http\RequestFactory;
 
 use function file_exists;
 
 class RoutingServiceProvider extends ServiceProvider implements IBootableServiceProvider
 {
+    /** @var string[] */
+    protected array $providers = [
+        Router::class,
+        IRequest::class,
+    ];
+
     public function register(IContainer $di): void
     {
+        $di->defineShared(IRequest::class, RequestFactory::class)->return('@fromGlobals');
         $di->defineShared(Router::class);
     }
 
@@ -25,7 +34,7 @@ class RoutingServiceProvider extends ServiceProvider implements IBootableService
         add_filter(Hooks::FILTER_CONTROLLER_SUFFIX, static fn () => 'Presenter');
         add_filter(Hooks::FILTER_DEFAULT_CONTROLLER, static fn () => DefaultPresenter::class);
         add_filter(Hooks::FILTER_NAMESPACE, static fn () => $di->config(
-            'view.namspace',
+            'view.namespace',
             $di->config('app.namespace', 'App\\') . 'UI\\Presenters'
         ));
 
