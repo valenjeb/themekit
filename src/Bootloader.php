@@ -20,7 +20,7 @@ class Bootloader
     /** @var string[] */
     protected array $configPaths  = [];
     protected string $environment = Environment::PRODUCTION;
-    protected bool $debug         = false;
+    protected bool $debug         = WP_DEBUG;
     protected ?string $logDir     = null;
     /** @var string[] */
     protected array $providers = [];
