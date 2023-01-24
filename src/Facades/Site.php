@@ -19,6 +19,7 @@ namespace Devly\ThemeKit\Facades;
  * @method static bool isMultisite()
  * @method static mixed getOption(string $key, $default = null)
  * @method static string|null info(string $show = '', string $filter = 'raw') Retrieves information about the current site.
+ * @method static \Devly\WP\Models\Site getInstance()
  */
 class Site extends Facade
 {

@@ -41,11 +41,12 @@ use Devly\ThemeKit\Application;
  * @method static bool isProduction()
  * @method static bool isDevelopment()
  * @method static bool isStaging()
+ * @method static Application getInstance()
  */
 class App extends Facade
 {
-	protected static function getFacadeAccessor(): string
-	{
-		return 'app';
-	}
+    protected static function getFacadeAccessor(): string
+    {
+        return 'app';
+    }
 }

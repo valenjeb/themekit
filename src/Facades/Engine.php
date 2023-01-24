@@ -16,6 +16,7 @@ use Latte\Macro;
  * @method static LatteEngine addFilterLoader(callable $callback) Registers filter loader.
  * @method static LatteEngine addFunction(string $name, callable $callback) Registers run-time function.
  * @method static LatteEngine addMacro(string $name, Macro $macro) Adds new macro.
+ * @method static LatteEngine getInstance
  */
 class Engine extends Facade
 {

@@ -28,6 +28,7 @@ use WP_Theme;
  * @method static bool hasParent
  * @method static \Devly\WP\Models\Theme getParent
  * @method static WP_Theme getCoreObject
+ * @method static \Devly\WP\Models\Theme getInstance()
  */
 class Theme extends Facade
 {

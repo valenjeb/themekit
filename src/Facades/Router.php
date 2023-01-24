@@ -23,6 +23,7 @@ use Devly\WP\Routing\Routes\Route;
  * @method static bool hasRoute(string $name)
  * @method static Route getWebRoute(string $name)
  * @method static Ajax getAjaxRoute(string $name)
+ * @method static \Devly\WP\Routing\Router getInstance()
  */
 class Router extends Facade
 {
