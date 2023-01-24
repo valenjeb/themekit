@@ -6,7 +6,6 @@ namespace Devly\ThemeKit\Bridges\Latte;
 
 use Devly\DI\Contracts\IBootableServiceProvider;
 use Devly\DI\Contracts\IConfigProvider;
-use Devly\DI\Contracts\IContainer;
 use Devly\DI\DI;
 use Devly\ThemeKit\Application;
 use Devly\ThemeKit\ServiceProvider;
@@ -31,26 +30,26 @@ class LatteServiceProvider extends ServiceProvider implements IBootableServicePr
         $this->app = $app;
     }
 
-    public function register(IContainer $di): void
+    public function register(): void
     {
-        $di->defineShared(Finder::class)
-            ->setParam('paths', $di->config('view.paths', $di->config('view.dirname', 'views')));
+        $this->app->defineShared(Finder::class)
+            ->setParam('paths', $this->app->config('view.paths', $this->app->config('view.dirname', 'views')));
 
-        $di->defineShared(LatteEngine::class, LatteFactory::class)
+        $this->app->defineShared(LatteEngine::class, LatteFactory::class)
             ->setParams([
                 'finder' => DI::get(Finder::class),
-                'cachePath' => $di->config('view.cache', $this->app->getCacheDir('views')),
+                'cachePath' => $this->app->config('view.cache', $this->app->getCacheDir('views')),
                 'autorefresh' => ! $this->app->isProduction() || $this->app->isProduction() && $this->app->isDebug(),
             ]);
     }
 
-    public function boot(IContainer $di): void
+    public function boot(): void
     {
         add_filter(Hooks::FILTER_NAMESPACE, [$this, 'filterPresenterNamespace']);
         add_filter(Hooks::FILTER_CONTROLLER_SUFFIX, [$this, 'filterPresenterSuffix']);
         add_filter(Hooks::FILTER_DEFAULT_CONTROLLER, [$this, 'filterDefaultPresenterName']);
 
-        if ($di->config('view.mode', Presenter::MODE_PRINT) !== Presenter::MODE_NO_PRINT) {
+        if ($this->app->config('view.mode', Presenter::MODE_PRINT) !== Presenter::MODE_NO_PRINT) {
             return;
         }
 
@@ -78,8 +77,8 @@ class LatteServiceProvider extends ServiceProvider implements IBootableServicePr
         return DefaultPresenter::class;
     }
 
-    public function provideConfig(IContainer $di): void
+    public function provideConfig(): void
     {
-        $di->alias(ITemplateFactory::class, TemplateFactory::class);
+        $this->app->alias(ITemplateFactory::class, TemplateFactory::class);
     }
 }

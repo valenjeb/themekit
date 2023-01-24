@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Devly\ThemeKit\Bridges\Assets;
 
 use Devly\DI\Contracts\IBootableServiceProvider;
-use Devly\DI\Contracts\IContainer;
 use Devly\ThemeKit\Application;
 use Devly\ThemeKit\ServiceProvider;
 use Devly\WP\Assets\Bundle;
@@ -37,15 +36,15 @@ class AssetsServiceProvider extends ServiceProvider implements IBootableServiceP
         $this->app = $app;
     }
 
-    public function register(IContainer $di): void
+    public function register(): void
     {
-        $di->defineShared(Manager::class);
-        $di->defineShared(UrlResolverFactory::class);
+        $this->app->defineShared(Manager::class);
+        $this->app->defineShared(UrlResolverFactory::class);
     }
 
-    public function boot(IContainer $di): void
+    public function boot(): void
     {
-        $bundles = $di->config('assets.bundles', []);
+        $bundles = $this->app->config('assets.bundles', []);
         foreach ($bundles as $name => $options) {
             $this->registerBundle($name, $options);
         }

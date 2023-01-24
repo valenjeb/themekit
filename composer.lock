@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d0386c96cfc6177a43ab20d5b5b6a0e",
+    "content-hash": "1f8ede6e32f51db1f9b85d7c1468bb07",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -122,16 +122,16 @@
         },
         {
             "name": "devly/php-di",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valenjeb/php-di.git",
-                "reference": "32b8fb84f8189e961478e904414e9f8e30e5f147"
+                "reference": "c7c9001165c521f7172de271a7c060ff20de35e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valenjeb/php-di/zipball/32b8fb84f8189e961478e904414e9f8e30e5f147",
-                "reference": "32b8fb84f8189e961478e904414e9f8e30e5f147",
+                "url": "https://api.github.com/repos/valenjeb/php-di/zipball/c7c9001165c521f7172de271a7c060ff20de35e5",
+                "reference": "c7c9001165c521f7172de271a7c060ff20de35e5",
                 "shasum": ""
             },
             "require": {
@@ -154,9 +154,9 @@
             "description": "PHP dependency injection container",
             "support": {
                 "issues": "https://github.com/valenjeb/php-di/issues",
-                "source": "https://github.com/valenjeb/php-di/tree/0.1.0"
+                "source": "https://github.com/valenjeb/php-di/tree/0.2.0"
             },
-            "time": "2023-01-24T07:37:56+00:00"
+            "time": "2023-01-24T07:58:53+00:00"
         },
         {
             "name": "devly/repository",
@@ -431,21 +431,21 @@
         },
         {
             "name": "devly/wp-routing",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valenjeb/wp-routing.git",
-                "reference": "71929b43a7197a201dc0a8b67d8b23da7b0c7fb9"
+                "reference": "867c797633779fd767b01285c5f7c012290bffd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valenjeb/wp-routing/zipball/71929b43a7197a201dc0a8b67d8b23da7b0c7fb9",
-                "reference": "71929b43a7197a201dc0a8b67d8b23da7b0c7fb9",
+                "url": "https://api.github.com/repos/valenjeb/wp-routing/zipball/867c797633779fd767b01285c5f7c012290bffd4",
+                "reference": "867c797633779fd767b01285c5f7c012290bffd4",
                 "shasum": ""
             },
             "require": {
                 "brain/hierarchy": "^3.2",
-                "devly/php-di": "^0.1",
+                "devly/php-di": "^0.2",
                 "devly/utils": "dev-master",
                 "ext-json": "*",
                 "nette/http": "^3.2",
@@ -470,9 +470,9 @@
             "description": "An MVC like routing system for WordPress",
             "support": {
                 "issues": "https://github.com/valenjeb/wp-routing/issues",
-                "source": "https://github.com/valenjeb/wp-routing/tree/0.1.0"
+                "source": "https://github.com/valenjeb/wp-routing/tree/0.2.0"
             },
-            "time": "2023-01-24T08:37:28+00:00"
+            "time": "2023-01-24T09:01:06+00:00"
         },
         {
             "name": "devly/wpdb",

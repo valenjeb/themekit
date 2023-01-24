@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Devly\ThemeKit\Bridges\Routing;
 
 use Devly\DI\Contracts\IBootableServiceProvider;
-use Devly\DI\Contracts\IContainer;
+use Devly\ThemeKit\Application;
 use Devly\ThemeKit\ServiceProvider;
 use Devly\ThemeKit\UI\DefaultPresenter;
 use Devly\WP\Routing\Hooks;
@@ -22,24 +22,30 @@ class RoutingServiceProvider extends ServiceProvider implements IBootableService
         Router::class,
         IRequest::class,
     ];
+    protected Application $app;
 
-    public function register(IContainer $di): void
+    public function __construct(Application $app)
     {
-        $di->defineShared(IRequest::class, RequestFactory::class)->return('@fromGlobals');
-        $di->defineShared(Router::class);
+        $this->app = $app;
     }
 
-    public function boot(IContainer $di): void
+    public function register(): void
+    {
+        $this->app->defineShared(IRequest::class, RequestFactory::class)->return('@fromGlobals');
+        $this->app->defineShared(Router::class);
+    }
+
+    public function boot(): void
     {
         add_filter(Hooks::FILTER_CONTROLLER_SUFFIX, static fn () => 'Presenter');
         add_filter(Hooks::FILTER_DEFAULT_CONTROLLER, static fn () => DefaultPresenter::class);
-        add_filter(Hooks::FILTER_NAMESPACE, static fn () => $di->config(
+        add_filter(Hooks::FILTER_NAMESPACE, static fn () => $this->app->config(
             'view.namespace.presenter',
-            $di->config('app.namespace', 'App\\') . 'UI\\Presenters'
+            $this->app->config('app.namespace', 'App\\') . 'UI\\Presenters'
         ));
 
-        $router = $di->get(Router::class);
-        if ($di->config('view.handle') === 'all') {
+        $router = $this->app->get(Router::class);
+        if ($this->app->config('view.handle') === 'all') {
             $router->handleAllRequests(true);
         }
 
