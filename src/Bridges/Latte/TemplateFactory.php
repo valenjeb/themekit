@@ -98,10 +98,16 @@ class TemplateFactory implements ITemplateFactory
             if ($control instanceof Presenter) {
                 $templateNamespace = str_replace(['Presenter', 'Controller'], '', $controlName);
             } else {
-                $templateNamespace = $controlName;
+                $templateNamespace = str_replace('Component', '', $controlName);
             }
 
             $class = implode('\\', $parts) . '\\' . $templateNamespace . '\\Template';
+            if (class_exists($class)) {
+                return $class;
+            }
+
+            $className = str_replace(['Presenter', 'Controller', 'Component'], '', $controlName) . 'Template';
+            $class     = $namespace . '\\' . $className;
             if (class_exists($class)) {
                 return $class;
             }
