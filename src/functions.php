@@ -11,6 +11,7 @@ use Devly\ThemeKit\Facades\Bundle;
 use Devly\ThemeKit\Facades\Engine;
 use Devly\ThemeKit\Facades\Mix;
 use Devly\ThemeKit\UI\Contracts\ITemplate;
+use Devly\ThemeKit\Utils\SVG;
 use Devly\WP\Assets\Asset;
 use Devly\WP\Assets\Manager;
 
@@ -89,7 +90,7 @@ function svg($path): string
 {
     if (is_string($path)) {
         if (is_file($path)) {
-            return file_get_contents($path);
+            return SVG::get($path);
         }
 
         $path = asset($path);
@@ -97,5 +98,5 @@ function svg($path): string
 
     assert($path instanceof Asset);
 
-    return file_get_contents($path->path());
+    return SVG::get($path->path());
 }
