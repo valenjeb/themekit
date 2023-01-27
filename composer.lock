@@ -350,12 +350,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/valenjeb/wp-models.git",
-                "reference": "08783b38581721013a87d545ae7a4f8ff1a94ceb"
+                "reference": "e7eb0844e2693daad363fa302a187291ea570b92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valenjeb/wp-models/zipball/08783b38581721013a87d545ae7a4f8ff1a94ceb",
-                "reference": "08783b38581721013a87d545ae7a4f8ff1a94ceb",
+                "url": "https://api.github.com/repos/valenjeb/wp-models/zipball/e7eb0844e2693daad363fa302a187291ea570b92",
+                "reference": "e7eb0844e2693daad363fa302a187291ea570b92",
                 "shasum": ""
             },
             "require": {
@@ -386,7 +386,7 @@
                 "issues": "https://github.com/valenjeb/wp-models/issues",
                 "source": "https://github.com/valenjeb/wp-models/tree/master"
             },
-            "time": "2023-01-26T16:10:42+00:00"
+            "time": "2023-01-27T06:49:11+00:00"
         },
         {
             "name": "devly/wp-query",
