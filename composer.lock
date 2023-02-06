@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c663d443592762f2de698cc6ec21055",
+    "content-hash": "4a6da28e96d1279ebb1012a056be49f4",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -344,16 +344,16 @@
         },
         {
             "name": "devly/wp-models",
-            "version": "dev-master",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valenjeb/wp-models.git",
-                "reference": "e7eb0844e2693daad363fa302a187291ea570b92"
+                "reference": "a409fded03633e0b0507af3dce0d76e9a207211c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valenjeb/wp-models/zipball/e7eb0844e2693daad363fa302a187291ea570b92",
-                "reference": "e7eb0844e2693daad363fa302a187291ea570b92",
+                "url": "https://api.github.com/repos/valenjeb/wp-models/zipball/a409fded03633e0b0507af3dce0d76e9a207211c",
+                "reference": "a409fded03633e0b0507af3dce0d76e9a207211c",
                 "shasum": ""
             },
             "require": {
@@ -371,7 +371,6 @@
                 "szepeviktor/phpstan-wordpress": "^1.1",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -382,9 +381,9 @@
             "description": "A collection of models asbtracting WordPress objects.",
             "support": {
                 "issues": "https://github.com/valenjeb/wp-models/issues",
-                "source": "https://github.com/valenjeb/wp-models/tree/master"
+                "source": "https://github.com/valenjeb/wp-models/tree/0.2.0"
             },
-            "time": "2023-01-27T06:49:11+00:00"
+            "time": "2023-02-06T10:51:00+00:00"
         },
         {
             "name": "devly/wp-query",
@@ -3051,7 +3050,6 @@
         "devly/config-loader": 20,
         "devly/utils": 20,
         "devly/wp-cpt": 20,
-        "devly/wp-models": 20,
         "devly/wp-query": 20,
         "devly/wpdb": 20
     },
