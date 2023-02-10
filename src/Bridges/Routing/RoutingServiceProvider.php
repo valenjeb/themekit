@@ -13,6 +13,7 @@ use Devly\WP\Routing\Hooks;
 use Devly\WP\Routing\Router;
 use Nette\Http\IRequest;
 use Nette\Http\IResponse;
+use Nette\Http\Request as HttpRequest;
 use Nette\Http\RequestFactory;
 use Nette\Http\Response as HttpResponse;
 
@@ -23,8 +24,9 @@ class RoutingServiceProvider extends ServiceProvider implements IBootableService
     /** @var string[] */
     protected array $providers = [
         Router::class,
-        IRequest::class,
+        HttpRequest::class,
     ];
+
     protected Application $app;
 
     public function __construct(Application $app)
@@ -34,13 +36,14 @@ class RoutingServiceProvider extends ServiceProvider implements IBootableService
 
     public function register(): void
     {
-        $this->app->defineShared(IRequest::class, RequestFactory::class)->return('@fromGlobals');
+        $this->app->defineShared(HttpRequest::class, RequestFactory::class)->return('@fromGlobals');
         $this->app->defineShared(Router::class);
     }
 
     public function provideConfig(): void
     {
         $this->app->alias(IResponse::class, HttpResponse::class);
+        $this->app->alias(IRequest::class, HttpRequest::class);
     }
 
     public function boot(): void
