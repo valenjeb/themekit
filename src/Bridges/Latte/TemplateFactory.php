@@ -106,8 +106,13 @@ class TemplateFactory implements ITemplateFactory
                 return $class;
             }
 
-            $className = str_replace(['Presenter', 'Controller', 'Component'], '', $controlName) . 'Template';
+            $className = str_replace(['Presenter', 'Controller', 'Component'], 'Template', $controlName);
             $class     = $namespace . '\\' . $className;
+            if (class_exists($class)) {
+                return $class;
+            }
+
+            $class = $namespace . '\\' . $controlName . 'Template';
             if (class_exists($class)) {
                 return $class;
             }
