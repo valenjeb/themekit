@@ -90,6 +90,8 @@ class Bootloader
 
         $providers = array_merge($app->config('app.providers', []), $this->providers);
 
+        $providers = apply_filters('themekit/registered_service_providers', $providers);
+
         foreach ($providers as $provider) {
             try {
                 $app->registerServiceProvider($app->call($provider));
