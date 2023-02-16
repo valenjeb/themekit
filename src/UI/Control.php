@@ -7,8 +7,11 @@ namespace Devly\ThemeKit\UI;
 use Devly\ThemeKit\UI\Contracts\IRenderable;
 use Devly\ThemeKit\UI\Contracts\ITemplate;
 use Devly\ThemeKit\UI\Contracts\ITemplateFactory;
+use Invalid;
 use Latte\Runtime\HtmlStringable;
 use Nette\ComponentModel\IContainer;
+use Nette\InvalidStateException;
+use RuntimeException;
 use stdClass;
 
 use function array_shift;
@@ -45,9 +48,24 @@ abstract class Control extends Component implements IRenderable
 
     protected function createTemplate(?string $class = null): ITemplate
     {
-        $templateFactory = $this->templateFactory ?? $this->getPresenter()->getTemplateFactory();
+        $templateFactory = $this->getTemplateFactory();
 
         return $templateFactory->create($this, $class);
+    }
+
+    public function getTemplateFactory(): ITemplateFactory
+    {
+        if (isset($this->templateFactory)) {
+            return $this->templateFactory;
+        }
+
+        $parent = $this->getParent();
+
+        if ($parent instanceof Control) {
+            return $parent->getTemplateFactory();
+        }
+
+        throw new InvalidStateException('Service TemplateFactory has not been set.');
     }
 
     /**
