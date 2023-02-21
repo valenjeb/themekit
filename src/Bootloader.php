@@ -78,7 +78,8 @@ class Bootloader
         Facade::setFacadeApplication($app);
 
         try {
-            $loader = new Loader(false, $app->isProduction() && ! $app->isDebug() ? $app->getCacheDir() : null);
+            $storage = $app->isProduction() ? $app->getCacheDir('themekit') : null;
+            $loader  = new Loader(false, $storage);
             $app->config()->merge($loader->load($this->configPaths, true));
         } catch (Throwable $e) {
             throw new RuntimeException('ThemeKit failed loading config files.', 0, $e);
