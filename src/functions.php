@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit;
 
+use Devly\Exceptions\FileNotFoundException;
 use Devly\ThemeKit\Facades\App;
 use Devly\ThemeKit\Facades\Bundle;
 use Devly\ThemeKit\Facades\Engine;
@@ -18,6 +19,8 @@ use Devly\WP\Assets\Manager;
 use function assert;
 use function is_file;
 use function is_string;
+
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Retrieves an instance of current application object or a service from the application container.
@@ -42,11 +45,24 @@ function mix(string $path): Asset
 }
 
 /**
- * Get an asset from the assets manifest as an Asset object
+ * Get an asset as an Asset object
+ *
+ * @param string $path A file path relative to the theme directory.
+ *
+ * @throws FileNotFoundException
  */
 function asset(string $path): Asset
 {
-    return Mix::get($path);
+    $filePath = get_template_directory() . DIRECTORY_SEPARATOR . $path;
+    $fileUrl  = get_template_directory_uri() . '/' . $path;
+
+    $asset = new Asset($filePath, $fileUrl);
+
+    if (! $asset->exists()) {
+        throw new FileNotFoundException('No file found for path "' . $filePath . '".');
+    }
+
+    return $asset;
 }
 
 /**
