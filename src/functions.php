@@ -16,7 +16,6 @@ use Devly\WP\Assets\Asset;
 use Devly\WP\Assets\Manager;
 
 use function assert;
-use function file_get_contents;
 use function is_file;
 use function is_string;
 
