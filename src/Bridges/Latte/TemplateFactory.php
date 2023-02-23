@@ -56,6 +56,7 @@ class TemplateFactory implements ITemplateFactory
 
         UIMacros::install($engine->getCompiler());
         UIRuntimeFunctions::install($engine);
+        UIFilters::install($engine);
 
         $template = $this->app->makeWith($class, ['engine' => $engine]);
         Arr::invoke($this->onCreate, $template);
