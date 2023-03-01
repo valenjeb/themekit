@@ -54,7 +54,7 @@ abstract class Presenter extends Control implements IPresenter
     public const MODE_PRINT     = 1;
     public const MODE_NO_PRINT  = 2;
 
-    public static int $printMode = self::MODE_PRINT;
+    public static int $printMode = self::MODE_NO_PRINT;
     protected IContainer $container;
     protected Request $request;
     protected ?IResponse $response = null;
