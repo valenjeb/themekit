@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Latte;
 
+use Latte\Runtime\Html;
+
 class UIFilters
 {
     protected static UIFilters $instance;
@@ -17,7 +19,7 @@ class UIFilters
          * attribute names, attribute values, and HTML entities will occur in
          * the given text string.
          */
-        $engine->addFilter('wpkses', static fn (string $s, $context = 'post') => wp_kses($s, $context));
+        $engine->addFilter('wpkses', static fn ($s, $context = 'post') => new Html(wp_kses($s, $context)));
 
         /**
          * Replaces double line breaks with paragraph elements.
@@ -27,7 +29,7 @@ class UIFilters
          * line breaks after conversion become <br /> tags, unless $br is set to
          * '0' or 'false'
          */
-        $engine->addFilter('wpautop', static fn (string $s, bool $br = true) => wpautop($s, $br));
+        $engine->addFilter('wpautop', static fn ($s, bool $br = true) => new Html(wpautop($s, $br)));
 
         /**
          * Searches content for shortcodes and filter shortcodes through their hooks.
@@ -36,7 +38,7 @@ class UIFilters
          * without any filtering. This might cause issues when plugins are disabled
          * but the shortcode will still show up in the post or content
          */
-        $engine->addFilter('doShortcode', static fn (string $content, bool $ignoreHtml = false) => do_shortcode($content, $ignoreHtml)); // phpcs:ignore
+        $engine->addFilter('doShortcode', static fn ($content, bool $ignoreHtml = false) => new Html(do_shortcode($content, $ignoreHtml))); // phpcs:ignore
 
         /**
          * Sanitizes a filename, replacing whitespace with dashes.
@@ -59,7 +61,7 @@ class UIFilters
          * Note that the strings have to be in single quotes. The 'js_escape'
          * filter is also applied here.
          */
-        $engine->addFilter('escjs', static fn (string $text) => esc_js($text));
+        $engine->addFilter('escjs', static fn ($text) => esc_js($text));
     }
 
     public static function install(LatteEngine $engine): void
