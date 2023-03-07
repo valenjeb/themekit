@@ -1,0 +1,13 @@
+parameters:
+	level: 6
+	paths:
+		- .
+	excludePaths:
+		analyse:
+			- vendor/
+		analyseAndScan:
+			- dist/
+			- bin/
+	treatPhpDocTypesAsCertain: false
+includes:
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
