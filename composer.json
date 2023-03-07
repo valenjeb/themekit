@@ -42,6 +42,9 @@
     "wp-cli/i18n-command": "^2.2.5",
     "wptrt/wpthemereview": "^0.2.1"
   },
+  "scripts": {
+    "bundle": "sh ./bin/bundle.sh"
+  },
   "config": {
     "sort-packages": true,
     "allow-plugins": {
