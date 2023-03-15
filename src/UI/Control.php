@@ -61,6 +61,10 @@ abstract class Control extends Component implements IRenderable
 
         $parent = $this->getParent();
 
+        if ($parent instanceof Multiplier) {
+            $parent = $parent->getParent();
+        }
+
         if ($parent instanceof Control) {
             return $parent->getTemplateFactory();
         }
