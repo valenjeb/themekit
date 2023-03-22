@@ -49,11 +49,7 @@ class LatteServiceProvider extends ServiceProvider implements IBootableServicePr
         add_filter(Hooks::FILTER_CONTROLLER_SUFFIX, [$this, 'filterPresenterSuffix']);
         add_filter(Hooks::FILTER_DEFAULT_CONTROLLER, [$this, 'filterDefaultPresenterName']);
 
-        if ($this->app->config('view.mode', Presenter::MODE_PRINT) !== Presenter::MODE_NO_PRINT) {
-            return;
-        }
-
-        Presenter::$printMode = Presenter::MODE_NO_PRINT;
+        Presenter::$printMode = $this->app->config('view.mode', Presenter::MODE_NO_PRINT);
     }
 
     public function filterPresenterNamespace(string $namespace): string
