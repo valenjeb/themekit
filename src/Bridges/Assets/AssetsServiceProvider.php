@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Assets;
 
-use Devly\DI\Contracts\IBootableServiceProvider;
+use Devly\DI\ServiceProvider;
 use Devly\ThemeKit\Application;
-use Devly\ThemeKit\ServiceProvider;
 use Devly\WP\Assets\Bundle;
 use Devly\WP\Assets\Manager;
 use Devly\WP\Assets\Manifest;
@@ -21,10 +20,10 @@ use Throwable;
 use function file_exists;
 use function sprintf;
 
-class AssetsServiceProvider extends ServiceProvider implements IBootableServiceProvider
+class AssetsServiceProvider extends ServiceProvider
 {
     /** @var array|string[] */
-    protected array $providers = [
+    public array $providers = [
         Manager::class,
         UrlResolverFactory::class,
     ];

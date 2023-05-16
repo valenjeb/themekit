@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\ACF;
 
-use Devly\DI\Contracts\IBootableServiceProvider;
+use Devly\DI\ServiceProvider;
 use Devly\WP\Models\Filter;
 use Devly\WP\Models\Post;
 use Devly\WP\Models\Term;
@@ -12,7 +12,7 @@ use Devly\WP\Models\Term;
 use function function_exists;
 use function sprintf;
 
-class ACFServiceProvider implements IBootableServiceProvider
+class ACFServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {

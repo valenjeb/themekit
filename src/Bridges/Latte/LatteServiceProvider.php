@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Latte;
 
-use Devly\DI\Contracts\IBootableServiceProvider;
-use Devly\DI\Contracts\IConfigProvider;
 use Devly\DI\DI;
+use Devly\DI\ServiceProvider;
 use Devly\ThemeKit\Application;
-use Devly\ThemeKit\ServiceProvider;
 use Devly\ThemeKit\UI\Contracts\ITemplateFactory;
 use Devly\ThemeKit\UI\DefaultPresenter;
 use Devly\ThemeKit\UI\Finder;
 use Devly\ThemeKit\UI\Presenter;
 use Devly\WP\Routing\Hooks;
 
-class LatteServiceProvider extends ServiceProvider implements IBootableServiceProvider, IConfigProvider
+class LatteServiceProvider extends ServiceProvider
 {
     /** @var array|string[] */
-    protected array $providers = [
+    public array $providers = [
         LatteEngine::class,
         Finder::class,
     ];

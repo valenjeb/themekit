@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Routing;
 
-use Devly\DI\Contracts\IBootableServiceProvider;
-use Devly\DI\Contracts\IConfigProvider;
+use Devly\DI\ServiceProvider;
 use Devly\ThemeKit\Application;
-use Devly\ThemeKit\ServiceProvider;
 use Devly\ThemeKit\UI\DefaultPresenter;
 use Devly\WP\Routing\Hooks;
 use Devly\WP\Routing\Router;
@@ -19,10 +17,10 @@ use Nette\Http\Response as HttpResponse;
 
 use function file_exists;
 
-class RoutingServiceProvider extends ServiceProvider implements IBootableServiceProvider, IConfigProvider
+class RoutingServiceProvider extends ServiceProvider
 {
     /** @var string[] */
-    protected array $providers = [
+    public array $providers = [
         Router::class,
         HttpRequest::class,
     ];
@@ -32,18 +30,15 @@ class RoutingServiceProvider extends ServiceProvider implements IBootableService
     public function __construct(Application $app)
     {
         $this->app = $app;
+
+        $this->app->alias(IResponse::class, HttpResponse::class);
+        $this->app->alias(IRequest::class, HttpRequest::class);
     }
 
     public function register(): void
     {
         $this->app->defineShared(HttpRequest::class, RequestFactory::class)->return('@fromGlobals');
         $this->app->defineShared(Router::class);
-    }
-
-    public function provideConfig(): void
-    {
-        $this->app->alias(IResponse::class, HttpResponse::class);
-        $this->app->alias(IRequest::class, HttpRequest::class);
     }
 
     public function boot(): void

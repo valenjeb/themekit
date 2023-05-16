@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Assets;
 
+use Devly\DI\ServiceProvider;
 use Devly\ThemeKit\Application;
-use Devly\ThemeKit\ServiceProvider;
 
 class MixServiceProvider extends ServiceProvider
 {
     /** @var array|string[]  */
-    protected array $providers = [
+    public array $providers = [
         'mix',
         MixResolver::class,
     ];

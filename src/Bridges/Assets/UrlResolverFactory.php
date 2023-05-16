@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Assets;
 
+use Devly\DI\Contracts\Factory;
 use Devly\ThemeKit\Application;
 use Devly\WP\Assets\Configurator;
 use Devly\WP\Assets\Resolvers\UrlResolver;
 use Devly\WP\Assets\Version\EmptyVersionStrategy;
 use Devly\WP\Assets\Version\VersionStrategy;
 
-class UrlResolverFactory
+class UrlResolverFactory implements Factory
 {
     protected Application $app;
 
