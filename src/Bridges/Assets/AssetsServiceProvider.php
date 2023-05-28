@@ -23,7 +23,7 @@ use function sprintf;
 class AssetsServiceProvider extends ServiceProvider
 {
     /** @var array|string[] */
-    public array $providers = [
+    public array $provides = [
         Manager::class,
         UrlResolverFactory::class,
     ];

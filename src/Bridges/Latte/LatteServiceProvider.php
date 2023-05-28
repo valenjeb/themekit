@@ -16,7 +16,7 @@ use Devly\WP\Routing\Hooks;
 class LatteServiceProvider extends ServiceProvider
 {
     /** @var array|string[] */
-    public array $providers = [
+    public array $provides = [
         LatteEngine::class,
         Finder::class,
     ];

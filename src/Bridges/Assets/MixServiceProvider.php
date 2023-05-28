@@ -10,7 +10,7 @@ use Devly\ThemeKit\Application;
 class MixServiceProvider extends ServiceProvider
 {
     /** @var array|string[]  */
-    public array $providers = [
+    public array $provides = [
         MixResolver::class,
     ];
 

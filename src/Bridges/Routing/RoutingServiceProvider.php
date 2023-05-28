@@ -20,7 +20,7 @@ use function file_exists;
 class RoutingServiceProvider extends ServiceProvider
 {
     /** @var string[] */
-    public array $providers = [
+    public array $provides = [
         Router::class,
         HttpRequest::class,
     ];
