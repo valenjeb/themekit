@@ -19,7 +19,7 @@
   "require": {
     "php": "^7.4",
     "devly/config-loader": "dev-master",
-    "devly/php-di": "^0.3",
+    "devly/php-di": ">0.3",
     "devly/utils": "dev-master",
     "devly/wp-assets": "^1.0",
     "devly/wp-cpt": "dev-master",
