@@ -26,6 +26,8 @@ class LatteServiceProvider extends ServiceProvider
     public function __construct(Application $app)
     {
         $this->app = $app;
+
+        $this->init();
     }
 
     public function register(): void
@@ -71,7 +73,7 @@ class LatteServiceProvider extends ServiceProvider
         return DefaultPresenter::class;
     }
 
-    public function provideConfig(): void
+    private function init(): void
     {
         $this->app->alias(ITemplateFactory::class, TemplateFactory::class);
     }
