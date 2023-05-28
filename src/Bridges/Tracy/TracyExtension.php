@@ -16,6 +16,7 @@ use function sprintf;
 
 class TracyExtension
 {
+    /** @var array<string, mixed> */
     protected static array $config = [];
 
     /** @param string|array<string, mixed> $config A full config file path or a key value pair array. */
