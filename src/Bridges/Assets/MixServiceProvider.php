@@ -11,7 +11,6 @@ class MixServiceProvider extends ServiceProvider
 {
     /** @var array|string[]  */
     public array $providers = [
-        'mix',
         MixResolver::class,
     ];
 
@@ -20,6 +19,8 @@ class MixServiceProvider extends ServiceProvider
     public function __construct(Application $app)
     {
         $this->app = $app;
+
+        $this->app->alias('mix', MixResolver::class);
     }
 
     public function register(): void

@@ -7,10 +7,12 @@ namespace Devly\ThemeKit\Bridges\Assets;
 use Devly\WP\Assets\Configurator;
 use Devly\WP\Assets\Resolvers\Resolver;
 use Devly\WP\Assets\Version\VersionStrategy;
+
 use function file_exists;
 use function file_get_contents;
 use function strpos;
 use function trim;
+
 use const DIRECTORY_SEPARATOR;
 
 class MixResolver implements Resolver
