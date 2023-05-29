@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Latte;
 
+use Devly\DI\Contracts\IContainer;
 use Devly\DI\DI;
 use Devly\DI\ServiceProvider;
 use Devly\ThemeKit\Application;
@@ -21,35 +22,39 @@ class LatteServiceProvider extends ServiceProvider
         Finder::class,
     ];
 
-    protected Application $app;
+    protected IContainer $app;
 
-    public function __construct(Application $app)
+    public function init(IContainer $di): void
     {
-        $this->app = $app;
-
-        $this->init();
+        $di->alias(ITemplateFactory::class, TemplateFactory::class);
     }
 
-    public function register(): void
+    /** @var Application $di */
+    public function register(IContainer $di): void
     {
-        $this->app->defineShared(Finder::class)
-            ->setParam('paths', $this->app->config('view.paths', $this->app->config('view.dirname', 'views')));
+        $di->defineShared(Finder::class)
+            ->setParam(
+                'paths',
+                $di->config('view.paths', $di->config('view.dirname', 'views'))
+            );
 
-        $this->app->defineShared(LatteEngine::class, LatteFactory::class)
+        $di->defineShared(LatteEngine::class, LatteFactory::class)
             ->setParams([
-                'finder' => DI::get(Finder::class),
-                'cachePath' => $this->app->config('view.cache', $this->app->getCacheDir('views')),
-                'autorefresh' => ! $this->app->isProduction() || $this->app->isProduction() && $this->app->isDebug(),
+                'finder'      => DI::get(Finder::class),
+                'cachePath'   => $di->config('view.cache', $di->getCacheDir('views')),
+                'autorefresh' => ! $di->isProduction() || $di->isProduction() && $di->isDebug(),
             ]);
     }
 
-    public function boot(): void
+    public function boot(IContainer $di): void
     {
+        $this->app = $di;
+
         add_filter(Hooks::FILTER_NAMESPACE, [$this, 'filterPresenterNamespace']);
         add_filter(Hooks::FILTER_CONTROLLER_SUFFIX, [$this, 'filterPresenterSuffix']);
         add_filter(Hooks::FILTER_DEFAULT_CONTROLLER, [$this, 'filterDefaultPresenterName']);
 
-        Presenter::$printMode = $this->app->config('view.mode', Presenter::MODE_NO_PRINT);
+        Presenter::$printMode = $di->config('view.mode', Presenter::MODE_NO_PRINT);
     }
 
     public function filterPresenterNamespace(string $namespace): string
@@ -71,10 +76,5 @@ class LatteServiceProvider extends ServiceProvider
     public function filterDefaultPresenterName(): string
     {
         return DefaultPresenter::class;
-    }
-
-    private function init(): void
-    {
-        $this->app->alias(ITemplateFactory::class, TemplateFactory::class);
     }
 }

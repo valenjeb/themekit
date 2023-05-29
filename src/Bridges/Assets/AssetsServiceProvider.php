@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Assets;
 
+use Devly\DI\Contracts\IContainer;
 use Devly\DI\ServiceProvider;
-use Devly\ThemeKit\Application;
 use Devly\WP\Assets\Bundle;
 use Devly\WP\Assets\Manager;
 use Devly\WP\Assets\Manifest;
@@ -25,12 +25,12 @@ class AssetsServiceProvider extends ServiceProvider
     /** @var array|string[] */
     public array $provides = [
         Manager::class,
-        UrlResolverFactory::class,
+        UrlResolver::class,
     ];
 
-    protected Application $app;
+    protected IContainer $app;
 
-    public function __construct(Application $app)
+    public function init(IContainer $app): void
     {
         $this->app = $app;
     }
@@ -38,7 +38,7 @@ class AssetsServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->defineShared(Manager::class);
-        $this->app->defineShared(UrlResolverFactory::class);
+        $this->app->define(UrlResolver::class, UrlResolverFactory::class);
     }
 
     public function boot(): void
@@ -81,9 +81,7 @@ class AssetsServiceProvider extends ServiceProvider
 
         $options['versionStrategy'] = new JsonManifestVersionStrategy($manifest);
 
-        $factory = $this->app->get(UrlResolverFactory::class);
-
-        return $this->app->call([$factory, 'create'], $options);
+        return $this->createUrlResolver($options);
     }
 
     /**
@@ -104,17 +102,13 @@ class AssetsServiceProvider extends ServiceProvider
 
         $options['versionStrategy'] = new StaticVersionStrategy($version, $format);
 
-        $factory = $this->app->get(UrlResolverFactory::class);
-
-        return $this->app->call([$factory, 'create'], $options);
+        return $this->createUrlResolver($options);
     }
 
     /** @param array<string, mixed> $options */
     protected function createEmptyUrlResolver(array $options): UrlResolver
     {
-        $factory = $this->app->get(UrlResolverFactory::class);
-
-        return $this->app->call([$factory, 'create'], $options);
+        return $this->createUrlResolver($options);
     }
 
     /** @param array<string, mixed> $options */
@@ -210,5 +204,11 @@ class AssetsServiceProvider extends ServiceProvider
         }
 
         return $options;
+    }
+
+    /** @param array<string, mixed> $options */
+    protected function createUrlResolver(array $options): UrlResolver
+    {
+        return $this->app->makeWith(UrlResolver::class, $options);
     }
 }

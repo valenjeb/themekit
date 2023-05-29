@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2394f7ea6c9c480e78e99953bfbb435e",
+    "content-hash": "1df9262515a0497271343160eb31383d",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -122,16 +122,16 @@
         },
         {
             "name": "devly/php-di",
-            "version": "0.3.1",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valenjeb/php-di.git",
-                "reference": "75baa1e83d6842b7403fc52c51bc03686ead809e"
+                "reference": "0d3428896198267a24f4d4d89364ecd6f363642a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valenjeb/php-di/zipball/75baa1e83d6842b7403fc52c51bc03686ead809e",
-                "reference": "75baa1e83d6842b7403fc52c51bc03686ead809e",
+                "url": "https://api.github.com/repos/valenjeb/php-di/zipball/0d3428896198267a24f4d4d89364ecd6f363642a",
+                "reference": "0d3428896198267a24f4d4d89364ecd6f363642a",
                 "shasum": ""
             },
             "require": {
@@ -154,9 +154,9 @@
             "description": "PHP dependency injection container",
             "support": {
                 "issues": "https://github.com/valenjeb/php-di/issues",
-                "source": "https://github.com/valenjeb/php-di/tree/0.3.1"
+                "source": "https://github.com/valenjeb/php-di/tree/0.4.0"
             },
-            "time": "2023-05-28T11:03:40+00:00"
+            "time": "2023-05-29T09:43:33+00:00"
         },
         {
             "name": "devly/repository",
@@ -429,21 +429,21 @@
         },
         {
             "name": "devly/wp-routing",
-            "version": "0.2.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valenjeb/wp-routing.git",
-                "reference": "f42a69789a1e9316d36989b5e75a785b64e1d2e4"
+                "reference": "6840dd706d9016b19ec6035c4f85e1e10786ea4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valenjeb/wp-routing/zipball/f42a69789a1e9316d36989b5e75a785b64e1d2e4",
-                "reference": "f42a69789a1e9316d36989b5e75a785b64e1d2e4",
+                "url": "https://api.github.com/repos/valenjeb/wp-routing/zipball/6840dd706d9016b19ec6035c4f85e1e10786ea4b",
+                "reference": "6840dd706d9016b19ec6035c4f85e1e10786ea4b",
                 "shasum": ""
             },
             "require": {
                 "brain/hierarchy": "^3.2",
-                "devly/php-di": "^0.3",
+                "devly/php-di": ">0.3.0",
                 "devly/utils": "dev-master",
                 "ext-json": "*",
                 "nette/http": "^3.2",
@@ -458,6 +458,7 @@
                 "szepeviktor/phpstan-wordpress": "^1.3",
                 "yoast/phpunit-polyfills": "^1.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -468,9 +469,9 @@
             "description": "An MVC like routing system for WordPress",
             "support": {
                 "issues": "https://github.com/valenjeb/wp-routing/issues",
-                "source": "https://github.com/valenjeb/wp-routing/tree/0.2.1"
+                "source": "https://github.com/valenjeb/wp-routing/tree/master"
             },
-            "time": "2023-05-16T05:23:31+00:00"
+            "time": "2023-05-29T09:51:43+00:00"
         },
         {
             "name": "devly/wpdb",
@@ -1800,16 +1801,16 @@
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v6.1.1",
+            "version": "v6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "601c429ba8d91ef50a2a1bec05a7cd38b88064ff"
+                "reference": "0009429e639b748eef1c955200ea0d4e5ad5627d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/601c429ba8d91ef50a2a1bec05a7cd38b88064ff",
-                "reference": "601c429ba8d91ef50a2a1bec05a7cd38b88064ff",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/0009429e639b748eef1c955200ea0d4e5ad5627d",
+                "reference": "0009429e639b748eef1c955200ea0d4e5ad5627d",
                 "shasum": ""
             },
             "require-dev": {
@@ -1817,7 +1818,8 @@
                 "php": "~7.3 || ~8.0",
                 "php-stubs/generator": "^0.8.3",
                 "phpdocumentor/reflection-docblock": "^5.3",
-                "phpstan/phpstan": "^1.2"
+                "phpstan/phpstan": "^1.10.12",
+                "phpunit/phpunit": "^9.5"
             },
             "suggest": {
                 "paragonie/sodium_compat": "Pure PHP implementation of libsodium",
@@ -1838,9 +1840,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.1.1"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.2.1"
             },
-            "time": "2023-02-09T11:10:35+00:00"
+            "time": "2023-05-18T04:35:23+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -3048,6 +3050,7 @@
         "devly/utils": 20,
         "devly/wp-cpt": 20,
         "devly/wp-query": 20,
+        "devly/wp-routing": 20,
         "devly/wpdb": 20
     },
     "prefer-stable": true,

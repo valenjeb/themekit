@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Routing;
 
+use Devly\DI\Contracts\IContainer;
 use Devly\DI\ServiceProvider;
-use Devly\ThemeKit\Application;
 use Devly\ThemeKit\UI\DefaultPresenter;
 use Devly\WP\Routing\Hooks;
 use Devly\WP\Routing\Router;
@@ -25,33 +25,29 @@ class RoutingServiceProvider extends ServiceProvider
         HttpRequest::class,
     ];
 
-    protected Application $app;
-
-    public function __construct(Application $app)
+    public function init(IContainer $di): void
     {
-        $this->app = $app;
-
-        $this->app->alias(IResponse::class, HttpResponse::class);
-        $this->app->alias(IRequest::class, HttpRequest::class);
+        $di->alias(IResponse::class, HttpResponse::class);
+        $di->alias(IRequest::class, HttpRequest::class);
     }
 
-    public function register(): void
+    public function register(IContainer $di): void
     {
-        $this->app->defineShared(HttpRequest::class, RequestFactory::class)->return('@fromGlobals');
-        $this->app->defineShared(Router::class);
+        $di->defineShared(HttpRequest::class, RequestFactory::class)->return('@fromGlobals');
+        $di->defineShared(Router::class);
     }
 
-    public function boot(): void
+    public function boot(IContainer $di): void
     {
         add_filter(Hooks::FILTER_CONTROLLER_SUFFIX, static fn () => 'Presenter');
         add_filter(Hooks::FILTER_DEFAULT_CONTROLLER, static fn () => DefaultPresenter::class);
-        add_filter(Hooks::FILTER_NAMESPACE, fn () => $this->app->config(
+        add_filter(Hooks::FILTER_NAMESPACE, static fn () => $di->config(
             'view.namespace.presenter',
-            $this->app->config('app.namespace', 'App\\') . 'UI\\Presenters'
+            $di->config('app.namespace', 'App\\') . 'UI\\Presenters'
         ));
 
-        $router = $this->app->get(Router::class);
-        if ($this->app->config('view.handle') === 'all') {
+        $router = $di->get(Router::class);
+        if ($di->config('view.handle') === 'all') {
             $router->handleAllRequests(true);
         }
 

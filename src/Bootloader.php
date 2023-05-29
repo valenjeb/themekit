@@ -72,6 +72,8 @@ class Bootloader
 
     public function run(): void
     {
+        do_action('themekit/before_init', $this);
+
         $app = new Application($this->environment, $this->debug);
         $app->alias('app', Application::class);
 
