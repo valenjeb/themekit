@@ -4,32 +4,28 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Assets;
 
+use Devly\DI\Contracts\IContainer;
 use Devly\DI\ServiceProvider;
-use Devly\ThemeKit\Application;
 
 class MixServiceProvider extends ServiceProvider
 {
-    /** @var array|string[]  */
+    /** @var array|string[] */
     public array $provides = [
         MixResolver::class,
     ];
 
-    protected Application $app;
-
-    public function __construct(Application $app)
+    public function init(IContainer $di): void
     {
-        $this->app = $app;
-
-        $this->app->alias('mix', MixResolver::class);
+        $di->alias('mix', MixResolver::class);
     }
 
-    public function register(): void
+    public function register(IContainer $di): void
     {
-        $this->app->define(MixResolver::class, MixResolverFactory::class)
+        $di->define(MixResolver::class, MixResolverFactory::class)
             ->setParams([
-                'manifestPath' => $this->app->config('assets.manifest'),
-                'path'         => $this->app->config('assets.path'),
-                'uri'          => $this->app->config('assets.uri'),
+                'manifestPath' => $di->config('assets.manifest'),
+                'path'         => $di->config('assets.path'),
+                'uri'          => $di->config('assets.uri'),
             ]);
     }
 }
