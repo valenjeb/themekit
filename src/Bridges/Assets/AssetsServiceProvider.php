@@ -35,15 +35,15 @@ class AssetsServiceProvider extends ServiceProvider
         $this->app = $app;
     }
 
-    public function register(): void
+    public function register(IContainer $di): void
     {
-        $this->app->defineShared(Manager::class);
-        $this->app->define(UrlResolver::class, UrlResolverFactory::class);
+        $di->defineShared(Manager::class);
+        $di->define(UrlResolver::class, UrlResolverFactory::class);
     }
 
-    public function boot(): void
+    public function boot(IContainer $di): void
     {
-        $bundles = $this->app->config('assets.bundles', []);
+        $bundles = $di->config('assets.bundles', []);
         foreach ($bundles as $name => $options) {
             $this->registerBundle($name, $options);
         }
