@@ -12,6 +12,7 @@ use Devly\ThemeKit\UI\Contracts\IPresenter;
 use Devly\ThemeKit\UI\Contracts\ISignalReceiver;
 use Devly\ThemeKit\UI\Contracts\ITemplate;
 use Devly\ThemeKit\UI\Contracts\ITemplateFactory;
+use Devly\ThemeKit\UI\Exceptions\ForwardPresenter;
 use Devly\Utils\Arr;
 use Devly\WP\Models\User;
 use Devly\WP\Routing\Contracts\IResponse;
@@ -108,6 +109,8 @@ abstract class Presenter extends Control implements IPresenter
             if (self::$printMode === self::MODE_PRINT) {
                 $this->sendTemplate();
             }
+        } catch (ForwardPresenter $e) {
+            return;
         } catch (AbortException $e) {
         }
 
@@ -456,9 +459,14 @@ abstract class Presenter extends Control implements IPresenter
         return $this->templateFactory;
     }
 
+    /**
+     * @throws ForwardPresenter
+     */
     final public function forwardPresenter(string $presenter): void
     {
         $this->container->call([$presenter, 'run']);
+
+        throw new ForwardPresenter();
     }
 
     protected function beforeRender(): void
