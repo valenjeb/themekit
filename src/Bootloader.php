@@ -87,7 +87,9 @@ class Bootloader
             throw new RuntimeException('ThemeKit failed loading config files.', 0, $e);
         }
 
-        foreach ($app->config('app.aliases', []) as $alias => $target) {
+        $aliases = apply_filters('themekit/registered_aliases', $app->config('app.aliases', []));
+
+        foreach ($aliases as $alias => $target) {
             $app->alias($alias, $target);
         }
 
