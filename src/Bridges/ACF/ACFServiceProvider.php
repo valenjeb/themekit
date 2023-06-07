@@ -48,7 +48,7 @@ class ACFServiceProvider extends ServiceProvider
             return $result;
         }
 
-        return update_field($key, $value, $postObject->ID);
+        return (bool) update_field($key, $value, $postObject->ID);
     }
 
     /**
@@ -79,7 +79,7 @@ class ACFServiceProvider extends ServiceProvider
 
         $termID = sprintf('%s_%s', $object->getCoreObject()->taxonomy, $object->ID);
 
-        return update_field($key, $value, $termID);
+        return (bool) update_field($key, $value, $termID);
     }
 
     /**
@@ -103,6 +103,6 @@ class ACFServiceProvider extends ServiceProvider
             return $result;
         }
 
-        return update_field($key, $value, 'option');
+        return (bool) update_field($key, $value, 'option');
     }
 }
