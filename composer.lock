@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1df9262515a0497271343160eb31383d",
+    "content-hash": "0427b987d91721e3c641d84e9139d3db",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -122,16 +122,16 @@
         },
         {
             "name": "devly/php-di",
-            "version": "0.4.0",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valenjeb/php-di.git",
-                "reference": "0d3428896198267a24f4d4d89364ecd6f363642a"
+                "reference": "52f8c2dcae229bd403ae45f9da9af3d8e7b6fa8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valenjeb/php-di/zipball/0d3428896198267a24f4d4d89364ecd6f363642a",
-                "reference": "0d3428896198267a24f4d4d89364ecd6f363642a",
+                "url": "https://api.github.com/repos/valenjeb/php-di/zipball/52f8c2dcae229bd403ae45f9da9af3d8e7b6fa8d",
+                "reference": "52f8c2dcae229bd403ae45f9da9af3d8e7b6fa8d",
                 "shasum": ""
             },
             "require": {
@@ -154,9 +154,9 @@
             "description": "PHP dependency injection container",
             "support": {
                 "issues": "https://github.com/valenjeb/php-di/issues",
-                "source": "https://github.com/valenjeb/php-di/tree/0.4.0"
+                "source": "https://github.com/valenjeb/php-di/tree/0.4.1"
             },
-            "time": "2023-05-29T09:43:33+00:00"
+            "time": "2023-05-29T10:50:19+00:00"
         },
         {
             "name": "devly/repository",
@@ -344,16 +344,16 @@
         },
         {
             "name": "devly/wp-models",
-            "version": "0.2.0",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valenjeb/wp-models.git",
-                "reference": "a409fded03633e0b0507af3dce0d76e9a207211c"
+                "reference": "22005585631dfc4a636272ef2ff468453a47ac1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valenjeb/wp-models/zipball/a409fded03633e0b0507af3dce0d76e9a207211c",
-                "reference": "a409fded03633e0b0507af3dce0d76e9a207211c",
+                "url": "https://api.github.com/repos/valenjeb/wp-models/zipball/22005585631dfc4a636272ef2ff468453a47ac1a",
+                "reference": "22005585631dfc4a636272ef2ff468453a47ac1a",
                 "shasum": ""
             },
             "require": {
@@ -381,9 +381,9 @@
             "description": "A collection of models asbtracting WordPress objects.",
             "support": {
                 "issues": "https://github.com/valenjeb/wp-models/issues",
-                "source": "https://github.com/valenjeb/wp-models/tree/0.2.0"
+                "source": "https://github.com/valenjeb/wp-models/tree/0.2.2"
             },
-            "time": "2023-02-06T10:51:00+00:00"
+            "time": "2023-06-07T05:08:55+00:00"
         },
         {
             "name": "devly/wp-query",
