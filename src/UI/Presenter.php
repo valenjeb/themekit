@@ -459,9 +459,7 @@ abstract class Presenter extends Control implements IPresenter
         return $this->templateFactory;
     }
 
-    /**
-     * @throws ForwardPresenter
-     */
+    /** @throws ForwardPresenter */
     final public function forwardPresenter(string $presenter): void
     {
         $this->container->call([$presenter, 'run']);
@@ -519,5 +517,27 @@ abstract class Presenter extends Control implements IPresenter
     protected function requestToUrl(Request $request): string
     {
         return home_url($request->wp()->request);
+    }
+
+    protected function setThePageTitle(string $title): void
+    {
+        add_filter('the_title', static function ($_title, $id) use ($title) {
+            if ($id !== get_queried_object()->ID) {
+                return $_title;
+            }
+
+            return $title;
+        }, 99, 2);
+    }
+
+    protected function setFeaturedImage(int $id): void
+    {
+        add_filter('get_post_metadata', static function ($metadata, $objectID, $metaKey) use ($id) {
+            if ($metaKey !== '_thumbnail_id' || $objectID !== get_queried_object()->ID) {
+                return $metadata;
+            }
+
+            return $id;
+        }, 99, 3);
     }
 }
