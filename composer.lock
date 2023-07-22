@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0427b987d91721e3c641d84e9139d3db",
+    "content-hash": "56aca74cfb6fba8e9bfa793ddeaa992d",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -70,16 +70,16 @@
         },
         {
             "name": "devly/config-loader",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valenjeb/config-loader.git",
-                "reference": "f8d20eb344570b4834b292b372f5fc41f0036131"
+                "reference": "cefc686ac7fc2085549c5ba964c77a1e8e587f71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valenjeb/config-loader/zipball/f8d20eb344570b4834b292b372f5fc41f0036131",
-                "reference": "f8d20eb344570b4834b292b372f5fc41f0036131",
+                "url": "https://api.github.com/repos/valenjeb/config-loader/zipball/cefc686ac7fc2085549c5ba964c77a1e8e587f71",
+                "reference": "cefc686ac7fc2085549c5ba964c77a1e8e587f71",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,6 @@
                 "nette/neon": "Needed to support Neon configuration files",
                 "symfony/yaml": "Needed to support Yaml configuration files"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -116,9 +115,9 @@
             "description": "Load configurations from multiple sources into a `Devly\\Repository` object.",
             "support": {
                 "issues": "https://github.com/valenjeb/config-loader/issues",
-                "source": "https://github.com/valenjeb/config-loader/tree/master"
+                "source": "https://github.com/valenjeb/config-loader/tree/1.0.0"
             },
-            "time": "2022-10-25T11:11:32+00:00"
+            "time": "2023-07-21T07:44:45+00:00"
         },
         {
             "name": "devly/php-di",
@@ -3046,7 +3045,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "devly/config-loader": 20,
         "devly/utils": 20,
         "devly/wp-cpt": 20,
         "devly/wp-query": 20,
