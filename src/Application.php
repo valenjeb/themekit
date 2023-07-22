@@ -37,7 +37,7 @@ class Application extends Container
 
         $this->debug = $debug;
 
-        $this->cachePath = apply_filters('themekit/cache_directory_path', $cachePath ?? WP_CONTENT_DIR . '/cache');
+        $this->cachePath = apply_filters(Hooks::FILTER_CACHE_DIR_PATH, $cachePath ?? WP_CONTENT_DIR . '/cache');
         FileSystem::createDir($this->cachePath);
 
         parent::__construct([], $autowire, $shared);

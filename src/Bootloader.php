@@ -72,7 +72,7 @@ class Bootloader
 
     public function run(): void
     {
-        do_action('themekit/before_init', $this);
+        do_action(Hooks::ACTION_BEFORE_INIT, $this);
 
         $app = new Application($this->environment, $this->debug);
         $app->alias('app', Application::class);
@@ -87,7 +87,7 @@ class Bootloader
             throw new RuntimeException('ThemeKit failed loading config files.', 0, $e);
         }
 
-        $aliases = apply_filters('themekit/registered_aliases', $app->config('app.aliases', []));
+        $aliases = apply_filters(Hooks::FILTER_REGISTERED_ALIASES, $app->config('app.aliases', []));
 
         foreach ($aliases as $alias => $target) {
             $app->alias($alias, $target);
@@ -95,7 +95,7 @@ class Bootloader
 
         $providers = array_merge($app->config('app.providers', []), $this->providers);
 
-        $providers = apply_filters('themekit/registered_service_providers', $providers);
+        $providers = apply_filters(Hooks::FILTER_REGISTERED_SERVICE_PROVIDERS, $providers);
 
         foreach ($providers as $provider) {
             try {
