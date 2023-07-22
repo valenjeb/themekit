@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
+// phpcs:disable Generic.Files.LineLength.TooLong
+
 namespace Devly\ThemeKit\Facades;
 
-use Devly\DI\Contracts\IBootableServiceProvider;
-use Devly\DI\Contracts\IConfigProvider;
+use Devly\DI\Contracts\IBootableProvider;
 use Devly\DI\Contracts\IContainer;
-use Devly\DI\Contracts\IDeferredServiceProvider;
 use Devly\DI\Contracts\IResolver;
 use Devly\DI\Contracts\IServiceProvider;
 use Devly\DI\Definition;
+use Devly\Repository;
 use Devly\ThemeKit\Application;
 
 /**
@@ -35,13 +36,14 @@ use Devly\ThemeKit\Application;
  * @method static bool resolved(string $key) Checks whether a resolved instance of a provided key name exists in the container.
  * @method static bool hasDefinition(string $key) Checks whether a definition of a provided key name exists in the container.
  * @method static IResolver getResolver()
- * @method static void register(IServiceProvider|IBootableServiceProvider|IDeferredServiceProvider|IConfigProvider $provider)
+ * @method static void register(IServiceProvider|IBootableProvider|object|string $provider)
  * @method static Application bindContainer(IContainer $container)
  * @method static string getEnvironment()
  * @method static bool isProduction()
  * @method static bool isDevelopment()
  * @method static bool isStaging()
  * @method static Application getInstance()
+ * @method static mixed|Repository config(?string $key = null, mixed $default = null)
  */
 class App extends Facade
 {
