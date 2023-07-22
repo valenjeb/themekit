@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Routing;
 
-use Devly\DI\Contracts\IContainer;
+use Devly\DI\Contracts\IBootableProvider;
 use Devly\DI\ServiceProvider;
 use Devly\ThemeKit\UI\DefaultPresenter;
 use Devly\WP\Routing\Hooks;
@@ -17,7 +17,7 @@ use Nette\Http\Response as HttpResponse;
 
 use function file_exists;
 
-class RoutingServiceProvider extends ServiceProvider
+class RoutingServiceProvider extends ServiceProvider implements IBootableProvider
 {
     /** @var string[] */
     public array $provides = [
@@ -25,29 +25,29 @@ class RoutingServiceProvider extends ServiceProvider
         HttpRequest::class,
     ];
 
-    public function init(IContainer $di): void
+    public function init(): void
     {
-        $di->alias(IResponse::class, HttpResponse::class);
-        $di->alias(IRequest::class, HttpRequest::class);
+        $this->container->alias(IResponse::class, HttpResponse::class);
+        $this->container->alias(IRequest::class, HttpRequest::class);
     }
 
-    public function register(IContainer $di): void
+    public function register(): void
     {
-        $di->defineShared(HttpRequest::class, RequestFactory::class)->return('@fromGlobals');
-        $di->defineShared(Router::class);
+        $this->container->defineShared(HttpRequest::class, RequestFactory::class)->return('@fromGlobals');
+        $this->container->defineShared(Router::class);
     }
 
-    public function boot(IContainer $di): void
+    public function boot(): void
     {
         add_filter(Hooks::FILTER_CONTROLLER_SUFFIX, static fn () => 'Presenter');
         add_filter(Hooks::FILTER_DEFAULT_CONTROLLER, static fn () => DefaultPresenter::class);
-        add_filter(Hooks::FILTER_NAMESPACE, static fn () => $di->config(
+        add_filter(Hooks::FILTER_NAMESPACE, static fn () => $this->container->config(
             'view.namespace.presenter',
-            $di->config('app.namespace', 'App\\') . 'UI\\Presenters'
+            $this->container->config('app.namespace', 'App\\') . 'UI\\Presenters'
         ));
 
-        $router = $di->get(Router::class);
-        if ($di->config('view.handle') === 'all') {
+        $router = $this->container->get(Router::class);
+        if ($this->container->config('view.handle') === 'all') {
             $router->handleAllRequests(true);
         }
 

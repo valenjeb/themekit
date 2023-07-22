@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Assets;
 
-use Devly\DI\Contracts\IContainer;
+use Devly\DI\Contracts\IBootableProvider;
 use Devly\DI\ServiceProvider;
 use Devly\WP\Assets\Bundle;
 use Devly\WP\Assets\Manager;
@@ -20,7 +20,7 @@ use Throwable;
 use function file_exists;
 use function sprintf;
 
-class AssetsServiceProvider extends ServiceProvider
+class AssetsServiceProvider extends ServiceProvider implements IBootableProvider
 {
     /** @var array|string[] */
     public array $provides = [
@@ -28,22 +28,15 @@ class AssetsServiceProvider extends ServiceProvider
         UrlResolver::class,
     ];
 
-    protected IContainer $app;
-
-    public function init(IContainer $app): void
+    public function register(): void
     {
-        $this->app = $app;
+        $this->container->defineShared(Manager::class);
+        $this->container->define(UrlResolver::class, UrlResolverFactory::class);
     }
 
-    public function register(IContainer $di): void
+    public function boot(): void
     {
-        $di->defineShared(Manager::class);
-        $di->define(UrlResolver::class, UrlResolverFactory::class);
-    }
-
-    public function boot(IContainer $di): void
-    {
-        $bundles = $di->config('assets.bundles', []);
+        $bundles = $this->container->config('assets.bundles', []);
         foreach ($bundles as $name => $options) {
             $this->registerBundle($name, $options);
         }
@@ -63,7 +56,7 @@ class AssetsServiceProvider extends ServiceProvider
             throw new RuntimeException(sprintf('Failed create bundle "%s"', $name), 0, $e);
         }
 
-        $manager = $this->app->get(Manager::class);
+        $manager = $this->container->get(Manager::class);
 
         $manager->add($name, new Bundle($name, $resolver, $options['bundle'] ?? []));
     }
@@ -116,7 +109,7 @@ class AssetsServiceProvider extends ServiceProvider
     {
         $options = $this->ensureManifestPath($options);
 
-        return $this->app->makeWith(MixResolver::class, $options);
+        return $this->container->makeWith(MixResolver::class, $options);
     }
 
     /**
@@ -128,10 +121,10 @@ class AssetsServiceProvider extends ServiceProvider
      */
     protected function ensureManifestPath(array $options): array
     {
-        $manifestPath = $options['manifest'] ?? $options['manifestPath'] ?? $this->app->config('assets.manifest');
+        $manifestPath = $options['manifest'] ?? $options['manifestPath'] ?? $this->container->config('assets.manifest');
 
         if (! $manifestPath) {
-            $manifestPath = $this->app->config('assets.path') . '/mix-manifest.json';
+            $manifestPath = $this->container->config('assets.path') . '/mix-manifest.json';
 
             if (! file_exists($manifestPath)) {
                 throw new RuntimeException(sprintf(
@@ -191,8 +184,8 @@ class AssetsServiceProvider extends ServiceProvider
     protected function ensurePathAndUri(array $options): array
     {
         if (! isset($options['path']) && ! isset($options['uri'])) {
-            $options['path'] = $this->app->config('assets.path');
-            $options['uri']  = $this->app->config('assets.uri');
+            $options['path'] = $this->container->config('assets.path');
+            $options['uri']  = $this->container->config('assets.uri');
         }
 
         if (! $options['path']) {
@@ -209,6 +202,6 @@ class AssetsServiceProvider extends ServiceProvider
     /** @param array<string, mixed> $options */
     protected function createUrlResolver(array $options): UrlResolver
     {
-        return $this->app->makeWith(UrlResolver::class, $options);
+        return $this->container->makeWith(UrlResolver::class, $options);
     }
 }

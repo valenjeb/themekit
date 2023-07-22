@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Devly\ThemeKit\Bridges\Assets;
 
-use Devly\DI\Contracts\IContainer;
 use Devly\DI\ServiceProvider;
 
 class MixServiceProvider extends ServiceProvider
@@ -14,18 +13,18 @@ class MixServiceProvider extends ServiceProvider
         MixResolver::class,
     ];
 
-    public function init(IContainer $di): void
+    public function init(): void
     {
-        $di->alias('mix', MixResolver::class);
+        $this->container->alias('mix', MixResolver::class);
     }
 
-    public function register(IContainer $di): void
+    public function register(): void
     {
-        $di->define(MixResolver::class, MixResolverFactory::class)
+        $this->container->define(MixResolver::class, MixResolverFactory::class)
             ->setParams([
-                'manifestPath' => $di->config('assets.manifest'),
-                'path'         => $di->config('assets.path'),
-                'uri'          => $di->config('assets.uri'),
+                'manifestPath' => $this->container->config('assets.manifest'),
+                'path'         => $this->container->config('assets.path'),
+                'uri'          => $this->container->config('assets.uri'),
             ]);
     }
 }
