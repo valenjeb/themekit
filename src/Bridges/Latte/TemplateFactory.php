@@ -66,9 +66,9 @@ class TemplateFactory implements ITemplateFactory
         $template->site      = Site::getInstance();
         $template->theme     = new Theme();
         $template->user      = new User(wp_get_current_user());
-        $postTypes           = $this->app->config('app.posts', []);
         $postTypes['post']   = Post::class;
         $postTypes['page']   = Page::class;
+        $postTypes           = $this->app->config('app.models', $this->app->config('app.posts', []));
 
         if (is_single() || is_page()) {
             $post = $GLOBALS['post'] ?? null;
