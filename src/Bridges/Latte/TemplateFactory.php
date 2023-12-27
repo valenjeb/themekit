@@ -17,7 +17,6 @@ use Devly\WP\Models\Post;
 use Devly\WP\Models\Theme;
 use Devly\WP\Models\User;
 use Illuminate\Support\Collection;
-use WP_Post;
 
 use function array_key_exists;
 use function array_pop;
@@ -69,17 +68,8 @@ class TemplateFactory implements ITemplateFactory
         $postTypes           = $this->app->config('app.models', $this->app->config('app.posts', []));
         $postTypes['post'] ??= Post::class;
         $postTypes['page'] ??= Page::class;
-
-        if (is_single() || is_page()) {
-            $post = $GLOBALS['post'] ?? null;
-            if ($post) {
-                $template->post = $this->ensureGlobalPost($post, $postTypes);
-            }
-        }
-
-        if (is_archive() || is_home() || is_search()) {
-            $template->posts = $this->getGlobalPosts($postTypes);
-        }
+        $template->post      = $this->ensureGlobalPost($postTypes);
+        $template->posts     = $this->ensureGlobalPosts($postTypes);
 
         return $template;
     }
@@ -132,7 +122,7 @@ class TemplateFactory implements ITemplateFactory
     }
 
     /** @param array<string, string> $postTypes */
-    protected function getGlobalPosts(array $postTypes): Collection
+    protected function ensureGlobalPosts(array $postTypes): Collection
     {
         if ($this->app->has('view.posts')) {
             return $this->app->get('view.posts');
@@ -162,8 +152,14 @@ class TemplateFactory implements ITemplateFactory
     }
 
     /** @param array<string, string> $postTypes */
-    protected function ensureGlobalPost(WP_Post $post, array $postTypes): ?Post
+    protected function ensureGlobalPost(array $postTypes): ?Post
     {
+        $post = $GLOBALS['post'] ?? null;
+
+        if (! $post) {
+            return null;
+        }
+
         if ($this->app->has('view.post')) {
             return $this->app->get('view.post');
         }
