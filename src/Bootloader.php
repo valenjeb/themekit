@@ -9,9 +9,9 @@ use Devly\ThemeKit\Facades\Facade;
 use RuntimeException;
 use Throwable;
 
-use function array_merge;
 use function dirname;
 use function func_get_args;
+use function in_array;
 use function is_array;
 use function sprintf;
 
@@ -65,7 +65,13 @@ class Bootloader
     {
         $service = is_array($service) ? $service : func_get_args();
 
-        $this->providers = array_merge($this->providers, $service);
+        foreach ($service as $_s) {
+            if (in_array($_s, $this->providers)) {
+                continue;
+            }
+
+            $this->providers[] = $_s;
+        }
 
         return $this;
     }
