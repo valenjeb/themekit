@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace Devly\ThemeKit;
 
 use Devly\ConfigLoader\Loader;
+use Devly\ThemeKit\Bridges\ACF\ACFServiceProvider;
+use Devly\ThemeKit\Bridges\Assets\AssetsServiceProvider;
+use Devly\ThemeKit\Bridges\Assets\MixServiceProvider;
+use Devly\ThemeKit\Bridges\Latte\LatteServiceProvider;
+use Devly\ThemeKit\Bridges\Routing\RoutingServiceProvider;
 use Devly\ThemeKit\Facades\Facade;
 use RuntimeException;
 use Throwable;
@@ -99,9 +104,10 @@ class Bootloader
             $app->alias($alias, $target);
         }
 
-        $providers = array_merge($app->config('app.providers', []), $this->providers);
+        $this->registerSupports($app->config('app.supports', []));
+        $this->addServiceProvider($app->config('app.providers', []));
 
-        $providers = apply_filters(Hooks::FILTER_REGISTERED_SERVICE_PROVIDERS, $providers);
+        $providers = apply_filters(Hooks::FILTER_REGISTERED_SERVICE_PROVIDERS, $this->providers);
 
         foreach ($providers as $provider) {
             try {
@@ -114,5 +120,27 @@ class Bootloader
         }
 
         $app->bootServices();
+    }
+
+    /** @param array<string, string, array<int, string>> $supports */
+    protected function registerSupports(array $supports): void
+    {
+        $mappings = [
+            'routing' => RoutingServiceProvider::class,
+            'assets'  => AssetsServiceProvider::class,
+            'mix'     => MixServiceProvider::class,
+            'latte'   => LatteServiceProvider::class,
+            'acf'     => ACFServiceProvider::class,
+        ];
+
+        foreach ($supports as $feature) {
+            $provider = $mappings[$feature] ?? null;
+
+            if (empty($provider) || in_array($provider, $this->providers)) {
+                continue;
+            }
+
+            $this->providers[] = $provider;
+        }
     }
 }
