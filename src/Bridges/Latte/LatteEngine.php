@@ -27,7 +27,7 @@ class LatteEngine extends Engine implements IEngine
      *
      * @throws FileNotFoundException if template file not found.
      */
-    public function render(string $name, $params = [], ?string $block = null): void
+    public function render(string $name, object|array $params = [], ?string $block = null): void
     {
         $path = $this->finder->find($name);
 
@@ -41,7 +41,7 @@ class LatteEngine extends Engine implements IEngine
      *
      * @throws FileNotFoundException if template file not found.
      */
-    public function renderToString(string $name, $params = [], ?string $block = null): string
+    public function renderToString(string $name, object|array $params = [], ?string $block = null): string
     {
         $path = $this->finder->find($name);
 

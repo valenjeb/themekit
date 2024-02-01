@@ -11,12 +11,12 @@ interface IEngine
      *
      * @param object|array<string, mixed> $params
      */
-    public function render(string $name, $params = []): void;
+    public function render(string $name, object|array $params = []): void;
 
     /**
      * Renders template to string.
      *
      * @param object|array<string, mixed> $params
      */
-    public function renderToString(string $name, $params = []): string;
+    public function renderToString(string $name, object|array $params = []): string;
 }

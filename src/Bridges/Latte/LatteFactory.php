@@ -20,7 +20,7 @@ class LatteFactory implements Factory
         $this->finder      = $finder;
     }
 
-    public function create(?Finder $finder = null, ?string $cachePath = null, bool $autorefresh = true): LatteEngine
+    public function create(?Finder $finder = null, ?string $cachePath = null, ?bool $autorefresh = true): LatteEngine
     {
         return (new LatteEngine($finder ?? $this->finder))
             ->setAutoRefresh($autorefresh ?? $this->autorefresh)

@@ -17,9 +17,6 @@
     "files": ["src/functions.php"]
   },
   "require": {
-    "php": "^7.4",
-    "devly/config-loader": "^1.0.0",
-    "devly/php-di": "0.5.0",
     "php": ">=8.1",
     "devly/config-loader": "^1.0",
     "devly/php-di": ">=0.6",
@@ -30,7 +27,7 @@
     "devly/wp-query": ">=0.1.0",
     "devly/wp-routing": ">=0.2.2",
     "devly/wpdb": "dev-master",
-    "latte/latte": "^2.11",
+    "latte/latte": "^3.0",
     "nette/component-model": "^3.0",
     "tracy/tracy": "^2.9"
   },

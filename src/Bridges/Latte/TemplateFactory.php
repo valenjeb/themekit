@@ -44,7 +44,7 @@ class TemplateFactory implements ITemplateFactory
     public function create(?Control $control = null, ?string $class = null): ITemplate
     {
         $class   ??= $this->formatTemplateName($control);
-        $presenter = $control ? $control->getPresenterIfExists() : null;
+        $presenter = $control?->getPresenterIfExists();
         $engine    = $this->getLatteEngine();
 
         $engine->addProvider('uiControl', $control);
@@ -53,7 +53,8 @@ class TemplateFactory implements ITemplateFactory
             $engine->addProvider('uiPresenter', $presenter);
         }
 
-        UIMacros::install($engine->getCompiler());
+
+        $engine->addExtension(new UIExtension($control));
         UIRuntimeFunctions::install($engine);
         UIFilters::install($engine);
 
