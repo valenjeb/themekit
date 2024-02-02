@@ -115,10 +115,29 @@ abstract class Component extends Container implements ISignalReceiver, ArrayAcce
             }
 
             try {
-                $rm->invokeArgs($this, $params);
+                $pass = [];
+                foreach ($rm->getParameters() as $param) {
+                    if (isset($params[$param->getName()])) {
+                        $pass[] = $params[$param->getName()];
+                    } else {
+                        try {
+                            $pass[] = $param->getDefaultValue();
+                        } catch (ReflectionException) {
+                            throw new RuntimeException(sprintf(
+                                'The #%s %s::%s() is not allowing null and no default value provided.',
+                                $param->getPosition() + 1,
+                                $rc->getName(),
+                                $rm->getName(),
+                            ));
+                        }
+                    }
+                }
+
+                $rm->invokeArgs($this, $pass);
             } catch (ReflectionException $e) {
                 throw new RuntimeException(sprintf(
-                    'Method %s() can not be called invoked.',
+                    'Method %s::%s() can not be invoked.',
+                    $rc->getName(),
                     $rm->getName()
                 ), 0, $e);
             }
