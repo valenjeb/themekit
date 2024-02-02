@@ -23,12 +23,12 @@
     "devly/utils": "dev-master",
     "devly/wp-assets": "^1.0",
     "devly/wp-cpt": ">=1.0.0",
-    "devly/wp-models": "^0.2",
+    "devly/wp-models": ">=0.2.3",
     "devly/wp-query": ">=0.1.0",
     "devly/wp-routing": ">=0.2.2",
     "devly/wpdb": "dev-master",
     "latte/latte": "^3.0",
-    "nette/component-model": "^3.0",
+    "nette/component-model": "^3.1",
     "tracy/tracy": "^2.9"
   },
   "require-dev": {
