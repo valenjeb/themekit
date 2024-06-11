@@ -23,7 +23,7 @@
     "devly/utils": "dev-master",
     "devly/wp-assets": "^1.0",
     "devly/wp-cpt": ">=1.0.0",
-    "devly/wp-models": ">=3.0.0",
+    "devly/wp-models": ">=3.0.2",
     "devly/wp-query": ">=0.1.0",
     "devly/wp-routing": ">=0.2.2",
     "devly/wpdb": "dev-master",
